@@ -1,0 +1,44 @@
+---
+-
+   name: create virtual machine in westus
+   hosts: localhost
+   tasks:
+       -
+          name: create virtual network in westus
+          azure_rm_virtualnetwork:
+                                resource_group: ammarg
+                                location: WestUS
+                                name: vnet1
+                                address_prefixes_cidr:
+                                                  - "192.168.0.0/16"
+                                state: present
+       -
+          name: create subnet in virtual network in westus
+          azure_rm_subnet:
+                        resource_group: ammarg
+                        virtual_network_name: vnet1
+                        name: Subnet1
+                        address_prefix_cidr: "192.168.0.0/24"
+                        state: present
+       - 
+          name: create virtual machine in westus
+          azure_rm_virtualmachine:
+                                resource_group: ammarg
+                                location: WestUS
+                                name: vm1
+                                admin_username: ranjiniuser
+                                admin_password: Yumservercachx86
+                                vm_size: Standard_B1ls
+                                managed_disk_type: Standard_LRS
+###need to try ansible secrets
+                                image:
+                                    offer: CentOS
+                                    publisher: OpenLogic
+                                    sku: '7.7'
+                                    urn: OpenLogic:CentOS:7.7:7.7.2020062400
+                                    version: 7.7.2020062400
+                                tags:
+                                   amma: ranjini
+                                   environment: production
+                                state: present
+

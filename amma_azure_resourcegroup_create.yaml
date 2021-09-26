@@ -1,0 +1,14 @@
+---
+-
+   name: create resource group amma
+   hosts: localhost
+   connection: local
+   tasks:
+       -
+           name: create resource group in westus
+           azure_rm_resourcegroup:
+                                name: ammarg
+                                location: WestUS
+                                tags:
+                                   amma: ranjini
+                                   environment: production
